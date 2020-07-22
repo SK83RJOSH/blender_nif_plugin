@@ -80,8 +80,12 @@ bl_info = {
 }
 
 
+log_handler = None
+
+
 def _init_loggers():
     """Set up loggers."""
+    global log_handler
     pyffi_logger = logging.getLogger("pyffi")
     pyffi_logger.setLevel(logging.WARNING)
     niftools_logger = logging.getLogger("niftools")
@@ -92,6 +96,16 @@ def _init_loggers():
     log_handler.setFormatter(log_formatter)
     niftools_logger.addHandler(log_handler)
     pyffi_logger.addHandler(log_handler)
+
+
+def _uninit_loggers():
+    """Remove loggers."""
+    global log_handler
+    pyffi_logger = logging.getLogger("pyffi")
+    pyffi_logger.removeHandler(log_handler)
+    niftools_logger = logging.getLogger("niftools")
+    niftools_logger.removeHandler(log_handler)
+    log_handler = None
 
 
 # noinspection PyUnusedLocal
@@ -201,12 +215,12 @@ def register():
 
 
 def unregister():
-    # no idea how to do this... oh well, let's not lose any sleep over it uninit_loggers()
     bpy.types.TOPBAR_MT_file_import.remove(menu_func_import)
     bpy.types.TOPBAR_MT_file_export.remove(menu_func_export)
     from bpy.utils import unregister_class
     for cls in reversed(classes):
         unregister_class(cls)
+    _uninit_loggers()
 
 
 if __name__ == "__main__":
