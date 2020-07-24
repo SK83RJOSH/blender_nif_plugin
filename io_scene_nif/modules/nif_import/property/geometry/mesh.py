@@ -97,10 +97,10 @@ class MeshPropertyProcessor:
 
         # set the vars on every processor
         for processor in self.processors:
-            processor.b_mesh = b_mesh
-            processor.n_block = n_block
-            processor.b_mat = b_mat
             processor.b_obj = b_obj
+            processor.b_mesh = b_mesh
+            processor.b_mat = b_mat
+            processor.n_block = n_block
             processor._nodes_wrapper = self.nodes_wrapper
 
         # run all processors

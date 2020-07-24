@@ -49,7 +49,9 @@ from io_scene_nif.utils.util_logging import NifLog
 class NiPropertyProcessor:
 
     __instance = None
+    _b_obj = None
     _b_mesh = None
+    _b_mat = None
     _n_block = None
     _nodes_wrapper = None
 
@@ -81,12 +83,28 @@ class NiPropertyProcessor:
         processor.register(NifFormat.NiVertexColorProperty, self.process_nivertexcolor_property)
 
     @property
+    def b_obj(self):
+        return self._b_obj
+
+    @b_obj.setter
+    def b_obj(self, value):
+        self._b_obj = value
+
+    @property
     def b_mesh(self):
         return self._b_mesh
 
     @b_mesh.setter
     def b_mesh(self, value):
         self._b_mesh = value
+
+    @property
+    def b_mat(self):
+        return self._b_mat
+
+    @b_mat.setter
+    def b_mat(self, value):
+        self._b_mat = value
 
     @property
     def n_block(self):
